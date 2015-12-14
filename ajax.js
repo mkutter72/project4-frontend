@@ -14,13 +14,7 @@ function fillCalendarCallback(error, data) {
     var oneThing = data[0];
     var size = data.length;
     for (var i = 0; i < data.length; i++)
-    {
-        var xx = data[i]["date"];
-        xx = data[i]["description"];
-        xx = data[i]["time"];
-        xx = data[i]["userName"];
         externAppsFunctions.addCalendarEvent(data[i]["date"],data[i]["userName"],data[i]["description"],data[i]["time"]);
-    }
 
   };
 
