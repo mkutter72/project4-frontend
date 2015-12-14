@@ -1,6 +1,8 @@
 'use strict';
 var externAppsFunctions = externAppsFunctions || {};
 
+var allMessages = "";
+
 function fillCalendarCallback(error, data) {
     if (error) {
 
@@ -17,6 +19,33 @@ function fillCalendarCallback(error, data) {
         externAppsFunctions.addCalendarEvent(data[i]["date"],data[i]["userName"],data[i]["description"],data[i]["time"]);
 
   };
+
+function displayMessagesCallback(error, data) {
+    if (error) {
+
+      $('#result').val('status: ' + error.status + ', error: ' +error.error);
+      return;
+    }
+
+    if (data) {
+      // keeping this around just incase I need to turn back on displaying all returns from DB
+      var dataStr = JSON.stringify(data, null, 4);
+
+      allMessages = "";
+      var oneThing = data.messages;
+      var size = oneThing.length;
+      for (var i = 0; i < size; i++) {
+        allMessages += oneThing[i]["userName"] + "\n";
+        allMessages += oneThing[i]["mesageTime"] + "\n";
+        allMessages += oneThing[i]["messageText"] + "\n";
+        }
+      $('#chatspace').val(allMessages);
+    } else {
+      console.log("error,  message board not found");
+    }
+
+  };
+
 
 function generalCallback(error, data) {
     if (error) {
@@ -91,7 +120,13 @@ var api = {
     }, callback);
   },
 
-
+  getMessageBoard: function (boardName, callback) {
+    this.ajax({
+      method: 'GET',
+      url: this.url + '/mboard?q=' + boardName,
+      dataType: 'json'
+    }, callback);
+  },
 
 
   createSurvey: function(surveyData, callback) {

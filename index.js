@@ -82,6 +82,12 @@ $(document).ready(function () {
 
     e.preventDefault();
     api.updateMessageBoard(messageData,generalCallback);
+    $('#messageTextID').val("");
+  });
+
+ $('#seleectBoardID').on('click',function (e){
+    e.preventDefault();
+    api.getMessageBoard($('#boardNameID').val(),displayMessagesCallback);
   });
 
 
