@@ -73,6 +73,23 @@ var api = {
     }, callback);
   },
 
+ createMessageBoard: function(boardData, callback) {
+    this.ajax({
+      method: 'POST',
+      url: this.url + '/mboard/makenew',
+      contentType: 'application/json',
+      data: JSON.stringify(boardData)
+    }, callback);
+  },
+
+  updateMessageBoard: function(messageData, callback) {
+    this.ajax({
+      method: 'PATCH',
+      url: this.url + '/mboard/update',
+      contentType: 'application/json; charset=utf-8',
+      data: JSON.stringify(messageData)
+    }, callback);
+  },
 
 
 

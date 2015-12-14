@@ -65,6 +65,26 @@ $(document).ready(function () {
     $('#result').val(resultString);
   });
 
+  $('#createBoardID').on('click',function (e){
+    var boardData = {
+      "boardname": $('#boardNameID').val()
+        };
+
+    e.preventDefault();
+    api.createMessageBoard(boardData,generalCallback);
+    });
+
+ $('#postMessageID').on('click',function (e){
+   var messageData = {
+      "boardname": $('#boardNameID').val(),
+      "messagetext": $('#messageTextID').val()
+        };
+
+    e.preventDefault();
+    api.updateMessageBoard(messageData,generalCallback);
+  });
+
+
   $('#create-appointment').on('submit', function(e) {
     e.preventDefault();
     var appointmentData = form2object(this);
@@ -147,3 +167,4 @@ $(".responsive-calendar").responsiveCalendar({
 
 
 externAppsFunctions['addCalendarEvent'] = addCalendarEvent;
+
