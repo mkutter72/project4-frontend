@@ -61,7 +61,6 @@ var form2object = function(form) {
 
 $(document).ready(function () {
   $('#showEvents').on('click',function (event){
-    console.log('Got here');
     var resultString = JSON.stringify(allEvents.options.events);
     $('#result').val(resultString);
   });
@@ -72,16 +71,16 @@ $(document).ready(function () {
 
     var events = allEvents.options.events;
     var currentAppointments = {}
-    var key = appointmentData.appointmentDate;
+    var key = appointmentData.appDate;
     currentAppointments[key] = events[key];
 
     if (events[key]) {
       currentAppointments[key].number +=  1;
       var newindex = currentAppointments[key].dayEvents.length;
       var newAppointment = {
-        "userName": appointmentData.appointmentOwer,
-        "description": appointmentData.appointmentDescription,
-        "time": appointmentData.appointmentTime
+        "userName": appointmentData.appUsername,
+        "description": appointmentData.appDescription,
+        "time": appointmentData.appTime
       };
 
       currentAppointments[key].dayEvents[newindex] = newAppointment;
@@ -90,18 +89,19 @@ $(document).ready(function () {
     } else {
 
       var editData = {};
-      editData[appointmentData.appointmentDate] = {
+      editData[appointmentData.appDate] = {
         "number": 1,
         "dayEvents": [{
-          "userName": appointmentData.appointmentOwer,
-          "description": appointmentData.appointmentDescription,
-          "time": appointmentData.appointmentTime
+          "userName": appointmentData.appUsername,
+          "description": appointmentData.appDescription,
+          "time": appointmentData.appTime
         }]
       };
 
       $(".responsive-calendar").responsiveCalendar('edit', editData);
     }
     $('#create-appointment').trigger("reset");
+    api.createAppointment(appointmentData,generalCallback);
   });
 
 $('#clearEvents').on('click',function (){

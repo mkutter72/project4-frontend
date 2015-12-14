@@ -18,6 +18,17 @@ function fillCalendarCallback(error, data) {
 
   };
 
+function generalCallback(error, data) {
+    if (error) {
+
+      $('#result').val('status: ' + error.status + ', error: ' +error.error);
+      return;
+    }
+
+    // keeping this around just incase I need to turn back on displaying all returns from DB
+    var dataStr = JSON.stringify(data, null, 4);
+
+  };
 
 var api = {
   url: 'http://localhost:3000',
@@ -52,6 +63,18 @@ var api = {
       url: this.url + '/appointment',
     }, callback);
   },
+
+  createAppointment: function(appointmentData, callback) {
+    this.ajax({
+      method: 'POST',
+      url: this.url + '/appointment/makenew',
+      contentType: 'application/json',
+      data: JSON.stringify(appointmentData)
+    }, callback);
+  },
+
+
+
 
 
   createSurvey: function(surveyData, callback) {
